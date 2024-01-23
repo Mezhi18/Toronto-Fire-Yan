@@ -1,0 +1,13 @@
+---
+title: "Toronto Fire"
+author: "Yan Mezhiborsky"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse) 
+
+
+
+```
