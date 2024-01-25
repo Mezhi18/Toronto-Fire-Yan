@@ -7,7 +7,52 @@ editor: visual
 
 ```{r}
 library(tidyverse) 
+library(janitor)
+library(knitr)
+library(lubridate)
+library(opendatatoronto)
+library(readr)
+library(dplyr)
+library(ggplot2)
 
 
+Fire_Incidents_Data
+
+clean_fire = Fire_Incidents_Data %>% #Here i am Cleaning the data by selecting only the columns i intend to use
+  select("_id", "Area_of_Origin","Civilian_Casualties","Count_of_Persons_Rescued","Estimated_Dollar_Loss","Extent_Of_Fire","Fire_Alarm_System_Operation","Fire_Alarm_System_Presence","Ignition_Source","Incident_Station_Area","Initial_CAD_Event_Type","Material_First_Ignited","Number_of_responding_apparatus","Number_of_responding_personnel","Possible_Cause","TFS_Alarm_Time","TFS_Arrival_Time") %>%
+  filter(Estimated_Dollar_Loss != "") %>% #This analysis will focus on financials so i am filtering out rows that had no data in this column
+  filter(Estimated_Dollar_Loss < 1000000) %>%
+  filter(Number_of_responding_personnel < 500)
+
+
+```
+
+```{r}
+
+clean_fire %>% ggplot(aes(x = clean_fire$Number_of_responding_personnel, y = clean_fire$Estimated_Dollar_Loss)) +
+  geom_point(colour = "blue", size = 3) +
+  ggtitle("No. of Responding Firefighters vs Estimated loss($)") +
+  xlab("Responding Firefighters") +
+  ylab("Estimated Loss ($)")
+
+ clean_fire %>% ggplot(aes(x = clean_fire$Number_of_responding_apparatus, y = clean_fire$Estimated_Dollar_Loss)) +
+  geom_point(colour = "red", size = 3) +
+  ggtitle("No. of Responding Firetrucks vs Estimated loss($)") +
+  xlab("Responding Trucks") +
+  ylab("Estimated Loss ($)")
+```
+
+```{r}
+
+
+  
+clean_fire %>%
+  ggplot(aes(x = Incident_Station_Area)) +
+  geom_histogram(binwidth = 1, color = "black") +
+  theme_minimal() +
+  labs(title = "Frequency of Response per Firestation", x = "Value", y = "Frequency")
+```
+
+```{r}
 
 ```
