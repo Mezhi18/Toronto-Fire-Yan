@@ -28,6 +28,13 @@ clean_fire = Fire_Incidents_Data %>% #Here i am Cleaning the data by selecting o
 ```
 
 
+
+
+
+
+
+
+
 ```{r}
 
 clean_fire %>% ggplot(aes(x = clean_fire$Number_of_responding_personnel, y = clean_fire$Estimated_Dollar_Loss)) +
